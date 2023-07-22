@@ -229,3 +229,13 @@ module.exports.totalRating = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
+/**--------------------------------
+ * @description uploade image
+ * @route /api/product/uploade
+ * @method put
+ * @access public
+------------------------------------*/
+module.exports.uploadeImage = asyncHandler(async (req, res) => {
+  console.log(req.files);
+});

@@ -61,6 +61,42 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
 });
 
 /**--------------------------------
+ * @description login admin
+ * @route /api/user/login
+ * @method POST
+ * @access public
+------------------------------------*/
+module.exports.loginAdminCtrl = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (user.role !== "admin") throw new Error("Not Authorized");
+
+  if (user && (await user.isPasswordMatched(password))) {
+    const refreshToken = await generateRefreshToken(user?._id);
+    const updateUser = await User.findByIdAndUpdate(
+      user?._id,
+      {
+        refreshToken: refreshToken,
+      },
+      { new: true }
+    );
+    res.cookie(`refreshToken`, refreshToken, {
+      httpOnly: true,
+      maxAge: 72 * 60 * 60 * 1000,
+    });
+    res.json({
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      mobile: user.mobile,
+      token: generateToken(user._id),
+    });
+  } else {
+    throw new Error("Invalid login");
+  }
+});
+/**--------------------------------
  * @description handle refresh token
  * @route / api/user/refresh
  * @method put
@@ -292,3 +328,11 @@ module.exports.resetPassword = asyncHandler(async (req, res) => {
   await user.save();
   res.json(user);
 });
+
+/**--------------------------------
+   * @description getWishList
+   * @route /api/user/wishlist
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getWishList = asyncHandler(async (req, res) => {});

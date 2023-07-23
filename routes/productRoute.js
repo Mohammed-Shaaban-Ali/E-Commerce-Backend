@@ -22,19 +22,19 @@ router
   .post(authMiddleware, isAdmin, createProduct)
   .get(getAllProduct);
 
-//  api/product/upload/:id
+// api/product/wishlist
+router.route("/wishlist").put(authMiddleware, addToWishlist);
+
+// api/product/upload/:id
 router
   .route("/upload/:id")
   .put(
     authMiddleware,
     isAdmin,
-    uploadPhoto.array("image", 10),
+    uploadPhoto.array("images", 10),
     productImgResize,
     uploadeImage
   );
-
-// api/product/wishlist
-router.route("/wishlist").put(authMiddleware, addToWishlist);
 
 // api/product/rating
 router.route("/rating").put(authMiddleware, totalRating);

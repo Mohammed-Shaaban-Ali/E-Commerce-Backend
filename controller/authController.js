@@ -335,4 +335,11 @@ module.exports.resetPassword = asyncHandler(async (req, res) => {
    * @method get
    * @access public
   ------------------------------------*/
-module.exports.getWishList = asyncHandler(async (req, res) => {});
+module.exports.getWishList = asyncHandler(async (req, res) => {
+  const { _id } = res.user;
+  try {
+    const finduser = await User.findById(_id);
+  } catch (error) {
+    throw new Error(error);
+  }
+});

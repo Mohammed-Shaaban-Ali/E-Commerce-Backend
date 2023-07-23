@@ -7,12 +7,14 @@ const {
   updateProduct,
   addToWishlist,
   totalRating,
+  uploadeImage,
 } = require("../controller/productController");
 const {
   authMiddleware,
   isAdmin,
   isAdminOrUserHimself,
 } = require("../middlewares/authMiddleware");
+const { uploadPhoto, productImgResize } = require("../middlewares/uploadImage");
 
 // api/product/
 router
@@ -22,6 +24,17 @@ router
 
 // api/product/wishlist
 router.route("/wishlist").put(authMiddleware, addToWishlist);
+
+// api/product/upload/:id
+router
+  .route("/upload/:id")
+  .put(
+    authMiddleware,
+    isAdmin,
+    uploadPhoto.array("images", 10),
+    productImgResize,
+    uploadeImage
+  );
 
 // api/product/rating
 router.route("/rating").put(authMiddleware, totalRating);

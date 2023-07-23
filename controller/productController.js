@@ -3,7 +3,8 @@ const Product = require("../models/Product");
 const validateMongodb = require("../utils/validateMongodb");
 var slugify = require("slugify");
 const User = require("../models/User");
-const { request } = require("express");
+const { cloudinaryUploadImg } = require("../utils/cloudinary");
+const fs = require("fs");
 
 /**--------------------------------
  * @description create New product
@@ -225,6 +226,41 @@ module.exports.totalRating = asyncHandler(async (req, res) => {
       { new: true }
     );
     res.json(finalproduct);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
+ * @description uploade image
+ * @route /api/product/uploade
+ * @method put
+ * @access public
+------------------------------------*/
+module.exports.uploadeImage = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodb(id);
+  try {
+    const upload = (path) => cloudinaryUploadImg(path, "images");
+    const urls = [];
+    const files = req.files;
+    for (let file of files) {
+      const { path } = file;
+      const newpath = await upload(path);
+      console.log(newpath);
+      urls.push(newpath);
+      fs.unlinkSync(path);
+    }
+    const findProudct = await Product.findByIdAndUpdate(
+      id,
+      {
+        images: urls.map((file) => {
+          return file;
+        }),
+      },
+      { new: true }
+    );
+    res.json(findProudct);
   } catch (error) {
     throw new Error(error);
   }

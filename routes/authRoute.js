@@ -13,6 +13,7 @@ const {
   updatePassword,
   forgotPasswordToken,
   resetPassword,
+  loginAdminCtrl,
 } = require("../controller/authController");
 const {
   authMiddleware,
@@ -25,6 +26,9 @@ router.route("/register").post(registerUserCtrl);
 
 // api/user/login
 router.route("/login").post(loginUserCtrl);
+
+// api/user/admin-login
+router.route("/admin-login").post(loginAdminCtrl);
 
 // api/user/password
 router.route("/password").put(authMiddleware, updatePassword);

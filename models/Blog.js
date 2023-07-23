@@ -39,10 +39,7 @@ var blogSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    image: {
-      type: String,
-      default: "", // URL for Blog Image
-    },
+    images: [],
     author: {
       type: String,
       default: "Admin",

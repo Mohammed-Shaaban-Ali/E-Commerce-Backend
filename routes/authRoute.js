@@ -14,6 +14,8 @@ const {
   forgotPasswordToken,
   resetPassword,
   loginAdminCtrl,
+  getWishList,
+  saveAddres,
 } = require("../controller/authController");
 const {
   authMiddleware,
@@ -47,6 +49,12 @@ router.route("/refresh").get(handleRefreashToken);
 
 // api/user/logout
 router.route("/logout").get(logoutUser);
+
+// api/user/wishlist
+router.route("/wishlist").get(authMiddleware, getWishList);
+
+// api/user/save-address
+router.route("/save-address").put(authMiddleware, saveAddres);
 
 // api/user/:id
 router

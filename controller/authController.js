@@ -113,7 +113,7 @@ module.exports.handleRefreashToken = asyncHandler(async (req, res) => {
       throw new Error("There is something wrong with refresh token");
     }
     const accessToken = generateToken(user?._id);
-    res.json({ accessToken });
+    res.json(accessToken);
   });
 });
 
@@ -157,7 +157,7 @@ module.exports.logoutUser = asyncHandler(async (req, res) => {
 module.exports.getAllUserCtrl = asyncHandler(async (req, res) => {
   try {
     const users = await User.find();
-    res.json({ users });
+    res.json(users);
   } catch (error) {
     throw new Error(error);
   }
@@ -173,7 +173,7 @@ module.exports.getloginUserCtrl = asyncHandler(async (req, res) => {
   try {
     validateMongodb(req.params.id);
     const user = await User.findById(req.params.id);
-    res.json({ user });
+    res.json(user);
   } catch (error) {
     throw new Error(error);
   }
@@ -198,7 +198,34 @@ module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
       },
       { new: true }
     );
-    res.json({ user });
+    res.json(user);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
+ * @description save addres user
+ * @route /api/user/save-address
+ * @method put
+ * @access public
+------------------------------------*/
+module.exports.saveAddres = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  validateMongodb(_id);
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        address: req?.body?.address,
+      },
+      {
+        new: true,
+      }
+    );
+    console.log(updatedUser.address);
+    res.json(updatedUser);
   } catch (error) {
     throw new Error(error);
   }
@@ -336,9 +363,10 @@ module.exports.resetPassword = asyncHandler(async (req, res) => {
    * @access public
   ------------------------------------*/
 module.exports.getWishList = asyncHandler(async (req, res) => {
-  const { _id } = res.user;
+  const { _id } = req.user;
   try {
-    const finduser = await User.findById(_id);
+    const findUser = await User.findById(_id).populate("wishlist");
+    res.json(findUser);
   } catch (error) {
     throw new Error(error);
   }

@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const { notfound, errorHandler } = require("./middlewares/errorHandler");
 const dotenv = require("dotenv").config();
+const cors = require("cors");
 
 // mongo server
 dbConnection();
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
+app.use(cors());
 
 // Routes
 app.use("/api/user", require("./routes/authRoute"));
@@ -25,6 +27,7 @@ app.use("/api/blog-category", require("./routes/blogCategoryRoute"));
 app.use("/api/brand-category", require("./routes/brandCategoryRoute"));
 app.use("/api/coupon", require("./routes/couponRoute"));
 app.use("/api/color", require("./routes/colorRoute"));
+app.use("/api/enquiry", require("./routes/enquiryRoute"));
 
 // middleware
 app.use(notfound);

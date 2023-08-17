@@ -28,6 +28,7 @@ app.use("/api/brand-category", require("./routes/brandCategoryRoute"));
 app.use("/api/coupon", require("./routes/couponRoute"));
 app.use("/api/color", require("./routes/colorRoute"));
 app.use("/api/enquiry", require("./routes/enquiryRoute"));
+app.use("/api/upload", require("./routes/uploadRoute"));
 
 // middleware
 app.use(notfound);

@@ -541,7 +541,7 @@ module.exports.createorder = asyncHandler(async (req, res) => {
 });
 
 /**--------------------------------
-   * @description get order
+   * @description get orders
    * @route /api/user/cart/get-orders
    * @method get
    * @access public
@@ -552,6 +552,25 @@ module.exports.getorder = asyncHandler(async (req, res) => {
   try {
     const userOrders = await Order.findOne({ orderBy: _id })
       .populate("products.product")
+      .populate("orderBy")
+      .exec();
+    res.json(userOrders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
+   * @description get allorder
+   * @route /api/user/cart/get-all-orders
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getallorder = asyncHandler(async (req, res) => {
+  try {
+    const userOrders = await Order.find()
+      .populate("products.product")
+      .populate("orderBy")
       .exec();
     res.json(userOrders);
   } catch (error) {

@@ -23,6 +23,7 @@ const {
   createorder,
   getorder,
   updateorder,
+  getallorder,
 } = require("../controller/authController");
 const {
   authMiddleware,
@@ -74,8 +75,10 @@ router
 router.route("/cart/applaycoupon").post(authMiddleware, applaycoupon);
 // api/user/cart/create-order
 router.route("/cart/create-order").post(authMiddleware, createorder);
-// api/user/cart/create-order
+// api/user/cart/get-orders
 router.route("/cart/get-orders").get(authMiddleware, getorder);
+// api/user/cart/get-all-orders
+router.route("/cart/get-all-orders").get(getallorder);
 // api/user/order/update-order/:id
 router
   .route("/order/update-order/:id")

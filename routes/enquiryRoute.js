@@ -10,10 +10,7 @@ const {
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 
 // api/enquiry/
-router
-  .route("/")
-  .get(authMiddleware, isAdmin, getallenquiry)
-  .post(createenquiry);
+router.route("/").get(getallenquiry).post(createenquiry);
 
 // api/enquiry/:id
 router

@@ -5,6 +5,7 @@ const {
   getAllCoupon,
   updateCoupon,
   deleteCoupon,
+  getSingleCoupon,
 } = require("../controller/couponContrller");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 
@@ -17,7 +18,8 @@ router
 // api/coupon/:id
 router
   .route("/:id")
-  .post(authMiddleware, isAdmin, updateCoupon)
-  .get(authMiddleware, isAdmin, deleteCoupon);
+  .put(authMiddleware, isAdmin, updateCoupon)
+  .delete(authMiddleware, isAdmin, deleteCoupon)
+  .get(authMiddleware, isAdmin, getSingleCoupon);
 
 module.exports = router;

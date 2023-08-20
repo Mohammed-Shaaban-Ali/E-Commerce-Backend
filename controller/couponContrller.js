@@ -64,3 +64,20 @@ module.exports.deleteCoupon = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
+/**--------------------------------
+ * @description getSingleCoupon
+ * @route /api/coupon/:id
+ * @method delete
+ * @access public
+------------------------------------*/
+module.exports.getSingleCoupon = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodb(id);
+  try {
+    const coupon = await Coupon.findById(id);
+    res.json(coupon);
+  } catch (error) {
+    throw new Error(error);
+  }
+});

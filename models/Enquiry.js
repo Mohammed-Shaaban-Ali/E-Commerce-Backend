@@ -21,8 +21,8 @@ var enquirySchema = new mongoose.Schema({
   status: {
     type: String,
     default: "Summitted",
+    enum: ["Summitted", "Contacted", "In Progress", "Resolved"],
   },
-  enum: ["Summitted", "Contacted", "In Progress"],
 });
 
 //Export the model

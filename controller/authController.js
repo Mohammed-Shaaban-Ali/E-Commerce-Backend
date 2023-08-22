@@ -561,6 +561,26 @@ module.exports.getorder = asyncHandler(async (req, res) => {
 });
 
 /**--------------------------------
+   * @description get order by id
+   * @route /api/user/cart/get-orderbyid/id
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getorderbyid = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodb(id);
+  try {
+    const userOrders = await Order.findOne({ orderBy: id })
+      .populate("products.product")
+      .populate("orderBy")
+      .exec();
+    res.json(userOrders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
    * @description get allorder
    * @route /api/user/cart/get-all-orders
    * @method get
@@ -568,11 +588,11 @@ module.exports.getorder = asyncHandler(async (req, res) => {
   ------------------------------------*/
 module.exports.getallorder = asyncHandler(async (req, res) => {
   try {
-    const userOrders = await Order.find()
+    const alluserorders = await Order.find()
       .populate("products.product")
       .populate("orderBy")
       .exec();
-    res.json(userOrders);
+    res.json(alluserorders);
   } catch (error) {
     throw new Error(error);
   }

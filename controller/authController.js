@@ -22,10 +22,15 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res) => {
   // is user already registered
   let user = await User.findOne({ email: req.body.email });
   if (!user) {
-    const newUser = await User.create(req.body);
-    res.json(newUser);
+    let mobile = await User.findOne({ mobile: req.body.mobile });
+    if (!mobile) {
+      const newUser = await User.create(req.body);
+      return res.status(200).json({ message: "successfully registered" });
+    } else {
+      throw new Error("Mobile already exist");
+    }
   } else {
-    throw new Error("User already exist");
+    throw new Error("Email already exist");
   }
 });
 

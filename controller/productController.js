@@ -67,8 +67,9 @@ module.exports.updateProduct = asyncHandler(async (req, res) => {
 ------------------------------------*/
 module.exports.deleteProduct = asyncHandler(async (req, res) => {
   try {
-    validateMongodb(req.params.id);
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    validateMongodb(id);
+    const product = await Product.findByIdAndDelete(id);
     res.json(product);
   } catch (error) {
     throw new Error(error);

@@ -39,7 +39,7 @@ var productSchema = new mongoose.Schema(
       default: 0,
     },
     images: [{ public_id: String, url: String }],
-    color: [],
+    color: [{ type: mongoose.Schema.Types.ObjectId, ref: "ColorCategory" }],
     tags: String,
     ratings: [
       {

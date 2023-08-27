@@ -31,7 +31,7 @@ module.exports.createProduct = asyncHandler(async (req, res) => {
 module.exports.getProduct = asyncHandler(async (req, res) => {
   try {
     validateMongodb(req.params.id);
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate("color");
     res.json(product);
   } catch (error) {
     throw new Error(error);

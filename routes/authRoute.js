@@ -70,8 +70,9 @@ router.route("/empty-cart").delete(authMiddleware, emptyCart);
 // api/user/cart
 router
   .route("/cart")
-  .post(authMiddleware, userCart)
-  .get(authMiddleware, getuserCart);
+  .get(authMiddleware, getuserCart)
+  .post(authMiddleware, userCart);
+
 // api/user/cart/applaycoupon
 router.route("/cart/applaycoupon").post(authMiddleware, applaycoupon);
 // api/user/cart/create-order

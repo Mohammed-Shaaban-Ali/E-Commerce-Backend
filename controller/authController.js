@@ -446,6 +446,48 @@ module.exports.emptyCart = asyncHandler(async (req, res) => {
 });
 
 /**--------------------------------
+   * @description remove cart
+   * @route /api/user/remove-cart/:id
+   * @method delet
+   * @access public
+  ------------------------------------*/
+module.exports.removeCart = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { id } = req.params;
+  validateMongodb(_id);
+  try {
+    const removecart = await Cart.deleteOne({ userId: _id, _id: id });
+    res.json(removecart);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
+   * @description updateUSingQuantity
+   * @route /api/user/remove-cart/:id
+   * @method delet
+   * @access public
+  ------------------------------------*/
+module.exports.updateUSingQuantity = asyncHandler(async (req, res) => {
+  const id = req.user._id;
+  const { cartItemId, newQuantity } = req.params;
+  // validateMongodb(_id);
+  try {
+    const cartItem = await Cart.findOne({
+      userId: id,
+      _id: cartItemId,
+    });
+    cartItem.quantity = newQuantity;
+    cartItem.save();
+    res.json(cartItem);
+    console.log(cartItem);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
    * @description applay coupon
    * @route /api/user/cart/applaycoupon
    * @method post

@@ -13,6 +13,7 @@ var orderSchema = new mongoose.Schema(
       lastName: { type: String, required: true },
       address: { type: String, required: true },
       city: { type: String, required: true },
+      country: { type: String, required: true },
       state: { type: String, required: true },
       other: { type: String, required: true },
       pincode: { type: String, required: true },

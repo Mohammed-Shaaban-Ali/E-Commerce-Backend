@@ -20,13 +20,14 @@ const {
   getuserCart,
   emptyCart,
   applaycoupon,
-  createorder,
-  getorder,
-  updateorder,
-  getallorder,
-  getorderbyid,
+  // createorder,
+  // getorder,
+  // updateorder,
+  // getallorder,
+  // getorderbyid,
   removeCart,
   updateUSingQuantity,
+  createorder,
 } = require("../controller/authController");
 const {
   authMiddleware,
@@ -86,12 +87,12 @@ router
 router.route("/cart/applaycoupon").post(authMiddleware, applaycoupon);
 // api/user/cart/create-order
 router.route("/cart/create-order").post(authMiddleware, createorder);
-// api/user/cart/get-orders
-router.route("/cart/get-orders").get(authMiddleware, getorder);
-// api/user/cart/get-orders
-router.route("/cart/getorderbyid/:id").get(getorderbyid);
-// api/user/cart/get-all-orders
-router.route("/cart/get-all-orders").get(getallorder);
+// // api/user/cart/get-orders
+// router.route("/cart/get-orders").get(authMiddleware, getorder);
+// // api/user/cart/get-orders
+// router.route("/cart/getorderbyid/:id").get(getorderbyid);
+// // api/user/cart/get-all-orders
+// router.route("/cart/get-all-orders").get(getallorder);
 
 // api/user/bloch-user/:id
 router.route("/bloch-user/:id").put(authMiddleware, isAdmin, blockUserCtrl);
@@ -105,9 +106,9 @@ router
   .delete(authMiddleware, isAdminOrUserHimself, deleteUserCtrl)
   .put(authMiddleware, isAdminOrUserHimself, updateUserCtrl);
 
-// api/user/order/update-order/:id
-router
-  .route("/order/update-order/:id")
-  .put(authMiddleware, isAdmin, updateorder);
+// // api/user/order/update-order/:id
+// router
+//   .route("/order/update-order/:id")
+//   .put(authMiddleware, isAdmin, updateorder);
 
 module.exports = router;

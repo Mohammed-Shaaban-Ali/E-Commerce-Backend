@@ -541,6 +541,14 @@ module.exports.createorder = asyncHandler(async (req, res) => {
   } = req.body;
   const { _id } = req.user;
   try {
+    console.log({
+      shippingInfo,
+      paymentInfo,
+      orderItems,
+      totalPrice,
+      totalPriceAfterDiscount,
+      user: _id,
+    });
     const order = await Order.create({
       shippingInfo,
       paymentInfo,

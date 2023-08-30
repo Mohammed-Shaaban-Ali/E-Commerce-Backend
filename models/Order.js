@@ -16,7 +16,7 @@ var orderSchema = new mongoose.Schema(
       country: { type: String, required: true },
       state: { type: String, required: true },
       other: { type: String, required: true },
-      pincode: { type: String, required: true },
+      pincode: { type: Number, required: true },
     },
     paymentInfo: {
       razorpayOrder: {

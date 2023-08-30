@@ -30,6 +30,10 @@ const {
   createorder,
 } = require("../controller/authController");
 const {
+  checkout,
+  paymentVerification,
+} = require("../controller/paymentController");
+const {
   authMiddleware,
   isAdmin,
   isAdminOrUserHimself,
@@ -75,6 +79,14 @@ router
   .route("/cart")
   .get(authMiddleware, getuserCart)
   .post(authMiddleware, userCart);
+
+// api/user/order/checkout
+router.route("/order/checkout").post(authMiddleware, checkout);
+
+// api/user/order/paymentVerification
+router
+  .route("/order/paymentVerification")
+  .post(authMiddleware, paymentVerification);
 
 // api/user/remove-cart/:id
 router.route("/remove-cart/:id").delete(authMiddleware, removeCart);

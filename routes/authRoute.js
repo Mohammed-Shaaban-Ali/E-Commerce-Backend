@@ -28,6 +28,7 @@ const {
   removeCart,
   updateUSingQuantity,
   createorder,
+  getMyOrder,
 } = require("../controller/authController");
 const {
   checkout,
@@ -100,9 +101,9 @@ router.route("/cart/applaycoupon").post(authMiddleware, applaycoupon);
 // api/user/cart/create-order
 router.route("/cart/create-order").post(authMiddleware, createorder);
 // // api/user/cart/get-orders
-// router.route("/cart/get-orders").get(authMiddleware, getorder);
-// // api/user/cart/get-orders
-// router.route("/cart/getorderbyid/:id").get(getorderbyid);
+
+// api/user/cart/get-orders
+router.route("/cart/myorder").get(authMiddleware, getMyOrder);
 // // api/user/cart/get-all-orders
 // router.route("/cart/get-all-orders").get(getallorder);
 

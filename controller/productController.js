@@ -182,6 +182,7 @@ module.exports.totalRating = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { star, comment, prodId } = req.body;
   try {
+    const user = await User.findById(_id);
     const product = await Product.findById(prodId);
     const alreadyRating = product.ratings.find(
       (id) => id.postedby.toString() === _id.toString()
@@ -207,6 +208,7 @@ module.exports.totalRating = asyncHandler(async (req, res) => {
               star: star,
               comment: comment,
               postedby: _id,
+              name: user.firstName + " " + user.lastName,
             },
           },
         },
@@ -224,6 +226,7 @@ module.exports.totalRating = asyncHandler(async (req, res) => {
       { totalrating: actualRating },
       { new: true }
     );
+
     res.json(finalproduct);
   } catch (error) {
     throw new Error(error);

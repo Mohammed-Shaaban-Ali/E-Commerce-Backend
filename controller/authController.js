@@ -54,7 +54,6 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
     );
     res.cookie(`refreshToken`, refreshToken, {
       httpOnly: true,
-      maxAge: 72 * 60 * 60 * 1000,
     });
     res.json({
       _id: user._id,
@@ -179,9 +178,9 @@ module.exports.getAllUserCtrl = asyncHandler(async (req, res) => {
  * @access public
 ------------------------------------*/
 module.exports.getloginUserCtrl = asyncHandler(async (req, res) => {
+  const id = req.user._id;
   try {
-    validateMongodb(req.params.id);
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(id);
     res.json(user);
   } catch (error) {
     throw new Error(error);
@@ -195,10 +194,11 @@ module.exports.getloginUserCtrl = asyncHandler(async (req, res) => {
  * @access public
 ------------------------------------*/
 module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
+  const id = req.user._id;
+  validateMongodb(id);
   try {
-    validateMongodb(req.params.id);
     const user = await User.findByIdAndUpdate(
-      req.user._id,
+      id,
       {
         firstName: req?.body?.firstName,
         lastName: req?.body?.lastName,
@@ -329,7 +329,7 @@ module.exports.forgotPasswordToken = asyncHandler(async (req, res) => {
   try {
     const token = await user.createPasswordResetToken();
     await user.save();
-    const url = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='http://localhost:8000/api/user/reset-password/${token}'>Click Here</>`;
+    const url = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='${process.env.URL_FRONTEND}/reset-password/${token}'>Click Here</>`;
     const data = {
       to: email,
       text: "Hey User",
@@ -351,6 +351,7 @@ module.exports.forgotPasswordToken = asyncHandler(async (req, res) => {
   ------------------------------------*/
 module.exports.resetPassword = asyncHandler(async (req, res) => {
   const { password } = req.body;
+  console.log(password);
   const { token } = req.params;
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
   const user = await User.findOne({

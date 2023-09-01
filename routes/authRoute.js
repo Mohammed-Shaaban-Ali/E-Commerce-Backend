@@ -114,10 +114,10 @@ router.route("/unbloch-user/:id").put(authMiddleware, isAdmin, unblockUserCtrl);
 
 // api/user/:id
 router
-  .route("/:id")
-  .get(authMiddleware, isAdminOrUserHimself, getloginUserCtrl)
-  .delete(authMiddleware, isAdminOrUserHimself, deleteUserCtrl)
-  .put(authMiddleware, isAdminOrUserHimself, updateUserCtrl);
+  .route("/")
+  .get(authMiddleware, getloginUserCtrl)
+  .delete(authMiddleware, deleteUserCtrl)
+  .put(authMiddleware, updateUserCtrl);
 
 // // api/user/order/update-order/:id
 // router

@@ -90,7 +90,7 @@ module.exports.getAllProduct = asyncHandler(async (req, res) => {
     excludeFile.forEach((el) => delete queryObj[el]);
     let queryString = JSON.stringify(queryObj);
     queryString = queryString.replace(
-      /\b(gte|gt|let|lt)\b/g,
+      /\b(gte|gt|lte|lt)\b/g,
       (match) => `$${match}`
     );
     let query = Product.find(JSON.parse(queryString));

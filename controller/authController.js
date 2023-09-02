@@ -601,6 +601,43 @@ module.exports.getallOrder = asyncHandler(async (req, res) => {
 });
 
 /**--------------------------------
+   * @description  getsingleOrder
+   * @route /api/user/cart/getsingleOrder/:id
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getsingleOrder = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const orders = await Order.find({ _id: id })
+      .populate("orderItems.product")
+      .populate("orderItems.color");
+    res.json(orders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
+   * @description  updateOrder
+   * @route /api/user/cart/updateOrder/:id
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.updateOrder = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const orders = await Order.findById(id);
+    orders.orderStatus = status;
+    await orders.save();
+    res.json(orders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
    * @description get my getMonthWiseOrderIncom
    * @route /api/user/getMonthWiseOrderIncom
    * @method get

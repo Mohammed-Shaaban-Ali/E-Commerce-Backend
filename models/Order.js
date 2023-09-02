@@ -50,6 +50,10 @@ var orderSchema = new mongoose.Schema(
         },
       },
     ],
+    month: {
+      type: String,
+      default: new Date().getMonth(),
+    },
     paidAt: {
       type: Date,
       default: Date.now(),

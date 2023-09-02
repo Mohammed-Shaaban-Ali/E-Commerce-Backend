@@ -29,6 +29,8 @@ const {
   updateUSingQuantity,
   createorder,
   getMyOrder,
+  getMonthWiseOrderIncom,
+  getYearsTotalOrders,
 } = require("../controller/authController");
 const {
   checkout,
@@ -80,6 +82,16 @@ router
   .route("/cart")
   .get(authMiddleware, getuserCart)
   .post(authMiddleware, userCart);
+
+// api/user/getMonthWiseOrderIncom
+router
+  .route("/getMonthWiseOrderIncom")
+  .get(authMiddleware, isAdmin, getMonthWiseOrderIncom);
+
+// api/user/getYearsTotalOrders
+router
+  .route("/getYearsTotalOrders")
+  .get(authMiddleware, isAdmin, getYearsTotalOrders);
 
 // api/user/order/checkout
 router.route("/order/checkout").post(authMiddleware, checkout);

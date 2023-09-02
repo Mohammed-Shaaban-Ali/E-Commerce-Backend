@@ -582,3 +582,113 @@ module.exports.getMyOrder = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
+/**--------------------------------
+   * @description get my getMonthWiseOrderIncom
+   * @route /api/user/getMonthWiseOrderIncom
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getMonthWiseOrderIncom = asyncHandler(async (req, res) => {
+  try {
+    let monthName = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let date = new Date();
+    let endDate = "";
+    date.setDate(1);
+    for (let i = 0; i < 11; i++) {
+      date.setMonth(date.getMonth() - 1);
+      endDate = monthName[date.getMonth()] + " " + date.getFullYear();
+    }
+
+    const data = await Order.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $lte: new Date(),
+            $gte: new Date(endDate),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            month: "$month",
+          },
+          amount: { $sum: "$totalPriceAfterDiscount" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    res.json(data);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
+   * @description getYearsTotalOrders
+   * @route /api/user/getYearsTotalOrders
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getYearsTotalOrders = asyncHandler(async (req, res) => {
+  try {
+    let monthName = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let date = new Date();
+    let endDate = "";
+    date.setDate(1);
+    for (let i = 0; i < 11; i++) {
+      date.setMonth(date.getMonth() - 1);
+      endDate = monthName[date.getMonth()] + " " + date.getFullYear();
+    }
+
+    const data = await Order.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $lte: new Date(),
+            $gte: new Date(endDate),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 },
+          amount: { $sum: "$totalPriceAfterDiscount" },
+        },
+      },
+    ]);
+    res.json(data);
+  } catch (error) {
+    throw new Error(error);
+  }
+});

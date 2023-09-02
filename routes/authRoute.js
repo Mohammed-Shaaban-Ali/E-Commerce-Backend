@@ -31,6 +31,7 @@ const {
   getMyOrder,
   getMonthWiseOrderIncom,
   getYearsTotalOrders,
+  getallOrder,
 } = require("../controller/authController");
 const {
   checkout,
@@ -116,8 +117,8 @@ router.route("/cart/create-order").post(authMiddleware, createorder);
 
 // api/user/cart/get-orders
 router.route("/cart/myorder").get(authMiddleware, getMyOrder);
-// // api/user/cart/get-all-orders
-// router.route("/cart/get-all-orders").get(getallorder);
+// api/user/cart/get-all-orders
+router.route("/cart/get-all-orders").get(getallOrder);
 
 // api/user/bloch-user/:id
 router.route("/bloch-user/:id").put(authMiddleware, isAdmin, blockUserCtrl);

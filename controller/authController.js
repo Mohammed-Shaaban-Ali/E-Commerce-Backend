@@ -584,6 +584,23 @@ module.exports.getMyOrder = asyncHandler(async (req, res) => {
 });
 
 /**--------------------------------
+   * @description  getallOrder
+   * @route /api/user/cart/getmyorder
+   * @method get
+   * @access public
+  ------------------------------------*/
+module.exports.getallOrder = asyncHandler(async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate("orderItems.product")
+      .populate("orderItems.color");
+    res.json(orders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+/**--------------------------------
    * @description get my getMonthWiseOrderIncom
    * @route /api/user/getMonthWiseOrderIncom
    * @method get

@@ -7,16 +7,17 @@ const morgan = require("morgan");
 const { notfound, errorHandler } = require("./middlewares/errorHandler");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
+const compression = require("compression");
 
 // mongo server
 dbConnection();
-
+app.use(cors());
+app.use(compression());
 // parse application
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(cors());
 
 // Routes
 app.use("/api/user", require("./routes/authRoute"));

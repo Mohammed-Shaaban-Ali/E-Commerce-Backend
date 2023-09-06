@@ -329,7 +329,7 @@ module.exports.forgotPasswordToken = asyncHandler(async (req, res) => {
   try {
     const token = await user.createPasswordResetToken();
     await user.save();
-    const url = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='${process.env.URL_FRONTEND}/reset-password/${token}'>Click Here</>`;
+    const url = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='https://e-commerce-v8ra.onrender.com/reset-password/${token}'>Click Here</>`;
     const data = {
       to: email,
       text: "Hey User",

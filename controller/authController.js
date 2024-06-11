@@ -44,6 +44,7 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user && (await user.isPasswordMatched(password))) {
+    
     const refreshToken = await generateRefreshToken(user?._id);
     const updateUser = await User.findByIdAndUpdate(
       user?._id,

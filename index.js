@@ -13,6 +13,7 @@ const compression = require("compression");
 dbConnection();
 app.use(cors());
 app.use(compression());
+
 // parse application
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

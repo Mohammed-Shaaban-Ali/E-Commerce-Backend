@@ -139,9 +139,4 @@ router
   .delete(authMiddleware, deleteUserCtrl)
   .put(authMiddleware, updateUserCtrl);
 
-// // api/user/order/update-order/:id
-// router
-//   .route("/order/update-order/:id")
-//   .put(authMiddleware, isAdmin, updateorder);
-
 module.exports = router;
